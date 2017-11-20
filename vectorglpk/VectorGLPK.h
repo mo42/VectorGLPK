@@ -1,4 +1,5 @@
-#ifndef EIGENGLPK_H
+#ifndef VECTORGLPK_H
+#define VECTORGLPK_H
 
 #include <string>
 #include <stdexcept>
@@ -80,5 +81,4 @@ public:
    */
   bool hasSolution(void);
 };
-#define EIGENGLPK_H 
-#endif /* EIGENGLPK_H */
+#endif /* VECTORGLPK_H */
