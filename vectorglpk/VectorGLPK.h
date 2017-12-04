@@ -10,6 +10,15 @@
 typedef std::vector<std::vector<double>> Matrix;
 typedef std::vector<double> Vector;
 
+enum {
+  VECTOR_GLPK_OPT = 0,
+  VECTOR_GLPK_FEAS,
+  VECTOR_GLPK_INFEAS,
+  VECTOR_GLPK_NOFEAS,
+  VECTOR_GLPK_UNBND,
+  VECTOR_GLPK_UNDEF
+};
+
 /**
  * This class represents an instance of a primal linear program of the form:
  * max c^Tx subject to Mx <= b and x >= 0.
@@ -76,11 +85,13 @@ public:
   void solve(Vector& x);
 
   /**
-   * Return true if the problem has an optimal solution.
+   * Return status of the current solution of the linear program.
    *
-   * return:
+   * return: One of the following values: VECTOR_GLPK_OPT, VECTOR_GLPK_FEAS,
+   * VECTOR_GLPK_INFEAS, VECTOR_GLPK_NOFEAS, VECTOR_GLPK_UNBND,
+   * VECTOR_GLPK_UNDEF, which are derived from GLPK.
    */
-  bool hasSolution(void);
+  int hasSolution(void);
 
   /**
    * Turn the instance into an integer linear program.

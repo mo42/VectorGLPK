@@ -68,12 +68,23 @@ void VectorGLPK::solve(Vector& x) {
   }
 }
 
-bool VectorGLPK::hasSolution(void) {
+int VectorGLPK::hasSolution(void) {
   int status = glp_get_status(linear_program);
-  if(status == GLP_OPT) {
-    return true;
-  } else {
-    return false;
+  switch (status) {
+  case GLP_OPT:
+    return VECTOR_GLPK_OPT;
+  case GLP_FEAS:
+    return VECTOR_GLPK_FEAS;
+  case GLP_INFEAS:
+    return VECTOR_GLPK_INFEAS;
+  case GLP_NOFEAS:
+    return VECTOR_GLPK_NOFEAS;
+  case GLP_UNBND:
+    return VECTOR_GLPK_UNBND;
+  case GLP_UNDEF:
+    return VECTOR_GLPK_UNDEF;
+  default:
+    return -1;
   }
 }
 
