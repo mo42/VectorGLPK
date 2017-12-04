@@ -24,6 +24,7 @@ private:
   size_t columns;
   // Array that stores indices
   std::vector<int> indices;
+  bool isIntegerLinearProgram;
 public:
   /**
    * Create an instance of a linear programming problem.
@@ -80,5 +81,12 @@ public:
    * return:
    */
   bool hasSolution(void);
+
+  /**
+   * Turn the instance into an integer linear program.
+   *
+   * Only the variables that have been added so far are set to be integers.
+   */
+  void setIntegerLinearProgram(void);
 };
 #endif /* VECTORGLPK_H */

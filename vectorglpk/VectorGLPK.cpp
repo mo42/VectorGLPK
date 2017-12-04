@@ -10,6 +10,7 @@ VectorGLPK::VectorGLPK() {
   rows = 0;
   columns = 0;
   indices.push_back(0);
+  isIntegerLinearProgram = false;
 }
 
 VectorGLPK::~VectorGLPK() {
@@ -49,10 +50,21 @@ void VectorGLPK::setObjectiveMaximize(const bool objective) {
 }
 
 void VectorGLPK::solve(Vector& x) {
-  glp_simplex(linear_program, NULL);
-  x.clear();
-  for(size_t i = 1; i <= columns; ++i) {
-    x.push_back((glp_get_col_prim(linear_program, i)));
+  if(!isIntegerLinearProgram) {
+    glp_simplex(linear_program, NULL);
+    x.clear();
+    for(size_t i = 1; i <= columns; ++i) {
+      x.push_back(glp_get_col_prim(linear_program, i));
+    }
+  } else {
+    glp_iocp parameter;
+    glp_init_iocp(&parameter);
+    parameter.presolve = GLP_ON;
+    glp_intopt(linear_program, &parameter);
+    x.clear();
+    for(size_t i = 1; i <= columns; ++i) {
+      x.push_back(glp_mip_col_val(linear_program, i));
+    }
   }
 }
 
@@ -63,4 +75,11 @@ bool VectorGLPK::hasSolution(void) {
   } else {
     return false;
   }
+}
+
+void VectorGLPK::setIntegerLinearProgram(void) {
+  for(size_t i = 1; i <= columns; ++i) {
+    glp_set_col_kind(linear_program, i, GLP_IV);
+  }
+  isIntegerLinearProgram = true;
 }
