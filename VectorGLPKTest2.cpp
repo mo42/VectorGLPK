@@ -19,6 +19,6 @@ int main(int argc, char* argv[]) {
   e.addConstraint(v, 5.0);
   e.solve(v);
   std::cout << v[0] << " " << v[1] << " " << v[2] << std::endl;
-  std::cout << e.hasSolution() << std::endl;
+  std::cout << e.getStatus() << std::endl;
   return 0;
 }

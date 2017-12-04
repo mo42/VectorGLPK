@@ -68,7 +68,7 @@ void VectorGLPK::solve(Vector& x) {
   }
 }
 
-int VectorGLPK::hasSolution(void) {
+int VectorGLPK::getStatus(void) {
   int status = glp_get_status(linear_program);
   switch (status) {
   case GLP_OPT:

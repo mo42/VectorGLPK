@@ -91,7 +91,7 @@ public:
    * VECTOR_GLPK_INFEAS, VECTOR_GLPK_NOFEAS, VECTOR_GLPK_UNBND,
    * VECTOR_GLPK_UNDEF, which are derived from GLPK.
    */
-  int hasSolution(void);
+  int getStatus(void);
 
   /**
    * Turn the instance into an integer linear program.
